@@ -38,7 +38,7 @@ def my_imfilter(image, kernel):
         print(f'kernel reshaped: {kernel.shape}')
     else:
         pad_width = ((ypad,ypad),(xpad,xpad))
-    padded_image = np.pad(image, pad_width, 'constant', constant_values=0)
+    padded_image = np.pad(image, pad_width, 'reflect', reflect_type='even')
     flipped = np.flipud(np.fliplr(kernel))
     for y in range(image.shape[0]):
         for x in range(image.shape[1]):
@@ -69,7 +69,13 @@ def my_imfilter_fft(image, kernel):
 
     ##################
     # Your code here #
-    print('my_imfilter_fft function in student.py needs to be implemented')
+    kernel_height = kernel.shape[0]
+    kernel_width = kernel.shape[1]
+    if (kernel_width % 2 == 0) or (kernel_height % 2 == 0):
+        raise Exception('All dimensions of kernel must be odd')
+    from numpy import fft
+    filtered_image = fft.ifft2(fft.fft2(image) * fft.fft2(kernel, s=image.shape))
+    filtered_image = np.clip(filtered_image, -1, 1)
     ##################
 
     return filtered_image
