@@ -69,13 +69,7 @@ def my_imfilter_fft(image, kernel):
 
     ##################
     # Your code here #
-    kernel_height = kernel.shape[0]
-    kernel_width = kernel.shape[1]
-    if (kernel_width % 2 == 0) or (kernel_height % 2 == 0):
-        raise Exception('All dimensions of kernel must be odd')
-    from numpy import fft
-    filtered_image = fft.ifft2(fft.ifft2(fft.fft2(image) * fft.fft2(kernel, s=image.shape)))
-    filtered_image = np.clip(filtered_image, -1, 1)
+    print("my_imfilter_fft has not been implemented")
     ##################
 
     return filtered_image
